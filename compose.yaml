@@ -35,7 +35,7 @@ services:
 
   tnut-nextjs:
     build:
-      context: ./tnut.edu.vn
+      context: ./tnut-uat-redis
     ports:
       - "127.0.0.1:3003:3000"
     networks:
