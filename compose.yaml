@@ -1,11 +1,11 @@
-version: "4.1.2"
+version: "4.1.3"
 
 services:
   # service of WEB
   tnut-wordpress:
     image: wordpress:latest
     ports:
-      - "127.0.0.1:8062:80"
+      - "8062:80"
     user: 1001:1001
     environment:
       WORDPRESS_DB_HOST: tnut-db
@@ -37,7 +37,7 @@ services:
     build:
       context: ./tnut-uat-redis
     ports:
-      - "127.0.0.1:3003:3000"
+      - "3003:3000"
     networks:
       - frontend
 
