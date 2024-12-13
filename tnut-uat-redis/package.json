@@ -1,0 +1,37 @@
+{
+  "name": "tnut.vn",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.8.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@types/react": "18.2.21",
+    "eslint": "8.49.0",
+    "eslint-config-next": "13.5.1",
+    "framer-motion": "^10.16.4",
+    "html-react-parser": "^5.0.5",
+    "ioredis": "^5.4.1",
+    "next": "13.5.1",
+    "next-seo": "^6.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.11.0",
+    "react-intersection-observer": "^9.8.2",
+    "react-paginate": "^8.2.0",
+    "sanitize-html": "^2.11.0",
+    "swiper": "^10.2.0",
+    "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.1",
+    "@types/sanitize-html": "^2.9.3"
+  }
+}
