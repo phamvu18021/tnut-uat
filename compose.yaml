@@ -1,118 +1,60 @@
 version: "4.1.1"
 
 services:
-  # nginx:
-  #   image: nginx:latest
-  #   ports:
-  #     - "8080:80"
-  #     - "443:443"
-  #   depends_on:
-  #     - eteaching-wordpress
-  #     - eteaching-nextjs
-  #     - odoo-dashboard
-  #   volumes:
-  #     - ./nginx.conf:/etc/nginx/nginx.conf
-  #     - /etc/letsencrypt/ssl/eteaching.ongdev.online:/etc/nginx/ssl/eteaching.ongdev.online
-  #     - /etc/letsencrypt/ssl/admin-wordpress.ongdev.online:/etc/nginx/ssl/admin-wordpress.ongdev.online
-  #     - /etc/letsencrypt/ssl/admin-odoo.ongdev.online:/etc/nginx/ssl/admin-odoo.ongdev.online
-  #   networks:
-  #     - frontend
-  #     - backend
-
   # service of WEB
-  eteaching-wordpress:
+  tnut-wordpress:
     image: wordpress:latest
     ports:
-      - "127.0.0.1:8000:80"
+      - "127.0.0.1:8062:80"
     user: 1001:1001
     environment:
-      WORDPRESS_DB_HOST: eteaching-db
+      WORDPRESS_DB_HOST: tnut-db
       WORDPRESS_DB_USER: it_aum
       WORDPRESS_DB_PASSWORD: It_aum@2024
-      WORDPRESS_DB_NAME: db_eteaching
+      WORDPRESS_DB_NAME: db_tnut
     volumes:
-      - ./eteaching-wordpress-vol:/var/www/html
+      - ./tnut-wordpress-vol:/var/www/html
     networks:
       - frontend
       - backend
 
-  eteaching-db:
+  tnut-db:
     image: mysql:5.7
     restart: always
     user: 1001:1001
     environment:
       MYSQL_ROOT_PASSWORD: It_aum@root@2024
-      MYSQL_DATABASE: db_eteaching
+      MYSQL_DATABASE: db_tnut
       MYSQL_USER: it_aum
       MYSQL_PASSWORD: It_aum@2024
     volumes:
-      - ./eteaching-db-vol:/var/lib/mysql
+      - ./tnut-db-vol:/var/lib/mysql
     networks:
       - backend
 
-  # Service of ERP
-  postgres-init:
-    image: postgres:14
-    volumes:
-      - "./postgres-vol:/data"
-    entrypoint:
-      - sh
-      - -c
-      - |
-        chown -R 1001:1001 /data
 
-  odoo-db:
-    depends_on:
-      postgres-init:
-        condition: service_completed_successfully
-    image: postgres:13
-    user: "1001"
-    restart: always # run as a service
-    environment:
-      - POSTGRES_USER=odoo
-      - POSTGRES_PASSWORD=odoo16@2022
-      - POSTGRES_DB=postgres
-    volumes:
-      - ./postgres-vol:/var/lib/postgresql/data
-    networks:
-      - backend
-
-  odoo-dashboard:
+  tnut-nextjs:
     build:
-      context: ./odoo
-    user: "root"
-    depends_on:
-      - odoo-db
+      context: ./tnut.edu.vn
     ports:
-      - "127.0.0.1:10016:8069"
-    tty: true
-    command: --
-    environment:
-      - HOST=odoo-db
-      - USER=odoo
-      - PASSWORD=odoo16@2022
-    volumes:
-      - ./odoo/addons:/mnt/extra-addons
-      - ./odoo/etc:/etc/odoo
-      - ./odoo/entrypoint.sh:/entrypoint.sh
-    restart: always
+      - "127.0.0.1:3003:3000"
     networks:
       - frontend
-      - backend
 
-  eteaching-nextjs:
-    build:
-      context: ./eteaching.edu.vn
+
+  redis:
+    image: redis:latest
+    container_name: redis-server
     ports:
-      - "127.0.0.1:3000:3000"
-    networks:
-      - frontend
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
 
 volumes:
-  eteaching-wordpress-vol:
-  eteaching-db-vol:
-  odoo:
-  postgres-vol:
+  tnut-wordpress-vol:
+  tnut-db-vol:
+  redis_data:
 
 networks:
   frontend:
