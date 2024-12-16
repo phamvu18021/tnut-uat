@@ -23,7 +23,7 @@ ENV API_URL http://10.10.51.16:8062/wp-json/wp/v2
 ENV API_RMS_URL https://nologin.tnut.vn/wp-json/rankmath/v1/getHead?url=https://nologin.tnut.vn
 ENV NEXT_PUBLIC_DOMAIN https://tnut.vn
 ENV TOKEN eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI0LCJuYW1lIjoidG51dC5hZG1pbiIsImlhdCI6MTcwMjY5OTUzNCwiZXhwIjoxODYwMzc5NTM0fQ._7-KRgPw9sjuhJtEVN81_pMdgQBMH_iSJ1nokvHML6A
-ENV REDIS_HOST http://10.10.51.16
+ENV REDIS_HOST 10.10.51.16
 ENV REDIS_PORT 6379
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
