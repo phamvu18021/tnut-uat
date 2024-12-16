@@ -30,16 +30,14 @@ export default async function handler(
     const cachedData = await redis.get(redisKey);
 
     if (cachedData) {
-      console.log(`Cache hit for ${redisKey}`);
       // Nếu có dữ liệu trong Redis, parse ra
       data = JSON.parse(cachedData);
-      console.log(data);
     } else {
       console.log(`Cache miss for ${redisKey}`);
       // Nếu không có, gọi API WordPress để lấy dữ liệu
       const responseWordpress = await fetchAuth({
         url: `${api_url}/form`,
-        revalidate: 1
+        revalidate: 600
       });
       data = await responseWordpress.json();
 
@@ -49,7 +47,7 @@ export default async function handler(
 
     // Xử lý dữ liệu từ `data`
     const htmlString = data?.length > 0 ? data[0]?.acf?.[String(type)] : "";
-
+    console.log(htmlString);
     const getFormRegex = /GetForm\("([^"]+)", "([^"]+)"\)/;
     const divRegex = /<div id="([^"]+)" class="([^"]+)"/;
     const getFormMatch = htmlString.match(getFormRegex);
