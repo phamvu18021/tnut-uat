@@ -33,7 +33,7 @@ export default async function handler(
       // Gọi WordPress API
       const endPoint = `${api_url}/${type}`;
       const response = await fetch(endPoint, {
-        next: { revalidate: 1 }
+        next: { revalidate: 600 }
       });
 
       if (!response.ok) {
