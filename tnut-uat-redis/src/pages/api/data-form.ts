@@ -17,7 +17,7 @@ export default async function handler(
   const api_url = process.env.API_URL || "";
 
   // Key để lưu cache trong Redis
-  const redisKey = `wordpress_form_data:${type}`;
+  const redisKey = `wordpress_form:${type}`;
 
   let url: string = "";
   let uuid: string = "";
@@ -30,9 +30,12 @@ export default async function handler(
     const cachedData = await redis.get(redisKey);
 
     if (cachedData) {
+      console.log(`Cache hit for ${redisKey}`);
       // Nếu có dữ liệu trong Redis, parse ra
       data = JSON.parse(cachedData);
+      console.log(data);
     } else {
+      console.log(`Cache miss for ${redisKey}`);
       // Nếu không có, gọi API WordPress để lấy dữ liệu
       const responseWordpress = await fetchAuth({
         url: `${api_url}/form`,
